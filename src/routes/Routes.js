@@ -9,6 +9,8 @@ const Routes = () => {
         <AppRoutes>
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+           
             {/* <Route path="invoices/:invoiceId" element={<Invoice />} /> */}
         </AppRoutes>
     );
