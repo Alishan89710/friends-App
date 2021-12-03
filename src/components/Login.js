@@ -1,32 +1,37 @@
 import "../App.scss"
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import React from 'react'
 import { Link } from "react-router-dom";
 import { Form, Input, Button, Checkbox } from 'antd';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from './firebase/firebaseLite';
+
 const Login = () => {
 
-    const onFinish = (values: any) => {
+    const onFinish = (values) => {
+        signInWithEmailAndPassword(auth, values.email, values.password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user)
+                navigate('/home')
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });
         console.log('Success:', values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
-
-    const [data, setData] = useState();
-    useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/todos/1', {
-            method: "GET"
-        })
-            .then(response => {
-                console.log(response);
-                return response.json();
-            })
-            .then(json => setData(json));
-    }, []);
-
+    
     return ( 
     <fieldset>
     <legend>Login</legend>
+    
     <div className="container"  >
 
 
